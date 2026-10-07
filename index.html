@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منيو مطعم البرنس - طلبات الواتساب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff5252;
+            --secondary-color: #ffb142;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 90px;
+        }
+
+        /* Header / Banner */
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800') center/cover;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            font-weight: 900;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Categories Navigation */
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 15px 20px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .category-btn {
+            background: #eee;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Products Grid */
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            margin: 15px 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: flex;
+            gap: 15px;
+            padding: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            align-items: center;
+        }
+
+        .product-img {
+            width: 85px;
+            height: 85px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .product-desc {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .add-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Floating Cart Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 12px 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .checkout-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Simple Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .send-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            background: #eee;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>مطعم ورشة البرجر 🍔</h1>
+        <p>أفضل برجر طازج في المدينة | التوصيل للمنزل</p>
+    </header>
+
+    <div class="categories">
+        <button class="category-btn active">الكل</button>
+        <button class="category-btn">البرجر</button>
+        <button class="category-btn">المقبلات</button>
+        <button class="category-btn">المشروبات</button>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">الأكثر طلباً 🔥</h2>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200" class="product-img" alt="برجر">
+            <div class="product-info">
+                <div class="product-title">كلاسيك برجر دبل</div>
+                <div class="product-desc">شريحتين لحم بقر بلدي، جبنة شيدر، صوص خاص</div>
+                <div class="product-price">120 ج.م</div>
+            </div>
+            <button class="add-btn" onclick="addToCart('كلاسيك برجر دبل', 120)">+ إضافة</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200" class="product-img" alt="برجر">
+            <div class="product-info">
+                <div class="product-title">تشيكن بوب كورن</div>
+                <div class="product-desc">قطع دجاج مقرمشة مع صوص الرانش</div>
+                <div class="product-price">75 ج.م</div>
+            </div>
+            <button class="add-btn" onclick="addToCart('تشيكن بوب كورن', 75)">+ إضافة</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=200" class="product-img" alt="مشروب">
+            <div class="product-info">
+                <div class="product-title">ميلك شيك شوكولاتة</div>
+                <div class="product-desc">ميلك شيك غني بالشوكولاتة والكريمة</div>
+                <div class="product-price">45 ج.م</div>
+            </div>
+            <button class="add-btn" onclick="addToCart('ميلك شيك شوكولاتة', 45)">+ إضافة</button>
+        </div>
+    </div>
+
+    <div class="cart-bar">
+        <div>
+            <span style="font-size:0.85rem; color:#666;">الإجمالي:</span>
+            <div id="total-price" style="font-size:1.1rem; font-weight:bold; color:var(--primary-color);">0 ج.م</div>
+        </div>
+        <button class="checkout-btn" onclick="openCheckout()">
+            إتمام الطلب عبر واتساب 💬
+        </button>
+    </div>
+
+    <!-- Modal Form for Customer Info -->
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content">
+            <h3>تفاصيل التوصيل</h3>
+            <input type="text" id="cust-name" placeholder="الاسم بالكامل">
+            <input type="text" id="cust-address" placeholder="العنوان بالتفصيل">
+            <div class="modal-actions">
+                <button class="send-btn" onclick="sendOrder()">إرسال إلى الواتساب</button>
+                <button class="close-btn" onclick="closeCheckout()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تغيير هذا الرقم إلى رقم واتساب صاحب المطعم (مع كود الدولة)
+        const RESTAURANT_PHONE = "201000000000"; 
+
+        let cart = [];
+        let total = 0;
+
+        function addToCart(title, price) {
+            cart.push({ title, price });
+            total += price;
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('total-price').innerText = total + " ج.م";
+        }
+
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert("برجاء إضافة منتجات للسلة أولاً!");
+                return;
+            }
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function sendOrder() {
+            const name = document.getElementById('cust-name').value;
+            const address = document.getElementById('cust-address').value;
+
+            if (!name || !address) {
+                alert("يرجى ملء كافة البيانات");
+                return;
+            }
+
+            // تجميع محتوى الطلب
+            let orderText = `طلب جديد من المنيو الإلكتروني 🍔\n\n`;
+            orderText += `👤 *الاسم:* ${name}\n`;
+            orderText += `📍 *العنوان:* ${address}\n\n`;
+            orderText += `🛒 *الطلبات:*\n`;
+
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.title} - ${item.price} ج.م\n`;
+            });
+
+            orderText += `\n💰 *الإجمالي:* ${total} ج.م`;
+
+            // توجيه للواتساب
+            const whatsappUrl = `https://wa.me/${RESTAURANT_PHONE}?text=${encodeURIComponent(orderText)}`;
+            window.open(whatsappUrl, '_blank');
+
+            // إعادة ضبط السلة
+            cart = [];
+            total = 0;
+            updateCartUI();
+            closeCheckout();
+        }
+    </script>
+</body>
+</html>
