@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منيو مطعم البرنس - طلبات الواتساب</title>
+    <title>منيو المطعم التفاعلي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ff5252;
-            --secondary-color: #ffb142;
+            --primary-color: #e63946;
+            --accent-color: #ffb703;
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
-            --text-color: #2d3436;
+            --text-color: #1d3557;
         }
 
         * {
@@ -24,23 +24,23 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            padding-bottom: 90px;
+            padding-bottom: 100px;
         }
 
-        /* Header / Banner */
+        /* Header */
         header {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800') center/cover;
             color: white;
             text-align: center;
-            padding: 40px 20px;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
+            padding: 35px 20px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
         }
 
         header h1 {
             font-size: 1.8rem;
-            margin-bottom: 5px;
             font-weight: 900;
+            margin-bottom: 6px;
         }
 
         header p {
@@ -48,7 +48,7 @@
             opacity: 0.9;
         }
 
-        /* Categories Navigation */
+        /* Categories Filter */
         .categories {
             display: flex;
             gap: 10px;
@@ -58,18 +58,24 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            scrollbar-width: none;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
         }
 
         .category-btn {
-            background: #eee;
+            background: #f1f3f5;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-weight: bold;
             white-space: nowrap;
             cursor: pointer;
             transition: 0.3s;
+            color: #495057;
         }
 
         .category-btn.active {
@@ -77,34 +83,42 @@
             color: white;
         }
 
-        /* Products Grid */
+        /* Container */
         .container {
             padding: 20px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .section-title {
-            margin: 15px 0;
-            font-size: 1.2rem;
-            color: var(--primary-color);
+        .category-section {
+            margin-bottom: 25px;
         }
 
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+
+        /* Product Card */
         .product-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             padding: 12px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             align-items: center;
         }
 
         .product-img {
-            width: 85px;
-            height: 85px;
-            border-radius: 8px;
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
             object-fit: cover;
         }
 
@@ -119,23 +133,31 @@
         }
 
         .product-desc {
-            font-size: 0.8rem;
-            color: #777;
+            font-size: 0.78rem;
+            color: #6c757d;
             margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .product-price {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: bold;
             color: var(--primary-color);
         }
 
-        .add-btn {
+        .opt-btn {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
         }
@@ -148,79 +170,108 @@
             right: 0;
             background: white;
             padding: 12px 20px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
             max-width: 600px;
             margin: 0 auto;
+            z-index: 20;
         }
 
         .checkout-btn {
             background: #25D366;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.95rem;
         }
 
-        /* Simple Modal */
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 100;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
+            align-items: flex-end;
         }
 
         .modal-content {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 24px;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
         }
 
-        .modal-content input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
 
-        .modal-actions {
+        .modal-header {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
 
-        .send-btn {
-            background: #25D366;
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group h4 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .option-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #f1f1f1;
+            font-size: 0.88rem;
+        }
+
+        .option-item input {
+            accent-color: var(--primary-color);
+            width: 18px;
+            height: 18px;
+        }
+
+        .modal-inputs input, .modal-inputs textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .confirm-btn {
+            background: var(--primary-color);
             color: white;
             border: none;
-            flex: 1;
-            padding: 10px;
-            border-radius: 6px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
             font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close-btn {
-            background: #eee;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
+            margin-top: 15px;
             cursor: pointer;
         }
     </style>
@@ -228,133 +279,339 @@
 <body>
 
     <header>
-        <h1>مطعم ورشة البرجر 🍔</h1>
-        <p>أفضل برجر طازج في المدينة | التوصيل للمنزل</p>
+        <h1>مطعم ولاينز & برجر 🍔🍕</h1>
+        <p>أشهى المأكولات السريعة والبيتزا الإيطالية</p>
     </header>
 
+    <!-- Categories Filter Navigation -->
     <div class="categories">
-        <button class="category-btn active">الكل</button>
-        <button class="category-btn">البرجر</button>
-        <button class="category-btn">المقبلات</button>
-        <button class="category-btn">المشروبات</button>
+        <button class="category-btn active" onclick="filterCategory('all', this)">الكل</button>
+        <button class="category-btn" onclick="filterCategory('burgers', this)">البرجر</button>
+        <button class="category-btn" onclick="filterCategory('pizza', this)">البيتزا</button>
+        <button class="category-btn" onclick="filterCategory('sides', this)">المقبلات</button>
+        <button class="category-btn" onclick="filterCategory('drinks', this)">المشروبات والحلويات</button>
     </div>
 
     <div class="container">
-        <h2 class="section-title">الأكثر طلباً 🔥</h2>
 
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200" class="product-img" alt="برجر">
-            <div class="product-info">
-                <div class="product-title">كلاسيك برجر دبل</div>
-                <div class="product-desc">شريحتين لحم بقر بلدي، جبنة شيدر، صوص خاص</div>
-                <div class="product-price">120 ج.م</div>
+        <!-- BURGERS SECTION -->
+        <div class="category-section" id="burgers">
+            <h3 class="section-title">قسم البرجر 🔥</h3>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">تريبل بيف بيكون برجر</div>
+                    <div class="product-desc">3 شرائح لحم بقر، بيكون مشوي، صوص تشيدر، هلابينو</div>
+                    <div class="product-bottom">
+                        <div class="product-price">160 ج.م</div>
+                        <button class="opt-btn" onclick="openOptions('تريبل بيف بيكون برجر', 160, 'burger')">اختيار الإضافات</button>
+                    </div>
+                </div>
             </div>
-            <button class="add-btn" onclick="addToCart('كلاسيك برجر دبل', 120)">+ إضافة</button>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1525164286253-04e68b9d94c6?w=300" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">سوبر تشيكن كرسبي</div>
+                    <div class="product-desc">صدور دجاج حارة مقرمشة، خس، طماطم، صوص المايونيز الحار</div>
+                    <div class="product-bottom">
+                        <div class="product-price">125 ج.م</div>
+                        <button class="opt-btn" onclick="openOptions('سوبر تشيكن كرسبي', 125, 'burger')">اختيار الإضافات</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200" class="product-img" alt="برجر">
-            <div class="product-info">
-                <div class="product-title">تشيكن بوب كورن</div>
-                <div class="product-desc">قطع دجاج مقرمشة مع صوص الرانش</div>
-                <div class="product-price">75 ج.م</div>
+        <!-- PIZZA SECTION -->
+        <div class="category-section" id="pizza">
+            <h3 class="section-title">البيتزا الإيطالية 🍕</h3>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">بيتزا بيبروني فاخرة</div>
+                    <div class="product-desc">شرائح البيبروني، جبنة موتزاريلا إيطالية، صوص طماطم طازج</div>
+                    <div class="product-bottom">
+                        <div class="product-price">من 110 ج.م</div>
+                        <button class="opt-btn" onclick="openOptions('بيتزا بيبروني فاخرة', 110, 'pizza')">تحديد الحجم والإضافات</button>
+                    </div>
+                </div>
             </div>
-            <button class="add-btn" onclick="addToCart('تشيكن بوب كورن', 75)">+ إضافة</button>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=300" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">بيتزا فور تشيز (4 أجبان)</div>
+                    <div class="product-desc">مزيج فاخر من الموتزاريلا، التشيدر، الريكوتا، والجبنة البيضاء</div>
+                    <div class="product-bottom">
+                        <div class="product-price">من 130 ج.م</div>
+                        <button class="opt-btn" onclick="openOptions('بيتزا فور تشيز', 130, 'pizza')">تحديد الحجم والإضافات</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=200" class="product-img" alt="مشروب">
-            <div class="product-info">
-                <div class="product-title">ميلك شيك شوكولاتة</div>
-                <div class="product-desc">ميلك شيك غني بالشوكولاتة والكريمة</div>
-                <div class="product-price">45 ج.م</div>
+        <!-- SIDES SECTION -->
+        <div class="category-section" id="sides">
+            <h3 class="section-title">المقبلات والجانبيات 🍟</h3>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">تشيزي فرايز بايكون</div>
+                    <div class="product-desc">بطاطس مقلية مع سايص الجبن الدافيء وقطع البيكون</div>
+                    <div class="product-bottom">
+                        <div class="product-price">65 ج.م</div>
+                        <button class="opt-btn" onclick="openOptions('تشيزي فرايز بايكون', 65, 'side')">إضافة صوصات</button>
+                    </div>
+                </div>
             </div>
-            <button class="add-btn" onclick="addToCart('ميلك شيك شوكولاتة', 45)">+ إضافة</button>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">حلقات البصل المقرمشة (8 قطع)</div>
+                    <div class="product-desc">تقدم مع صوص الباربيكيو الغني</div>
+                    <div class="product-bottom">
+                        <div class="product-price">45 ج.م</div>
+                        <button class="opt-btn" onclick="openOptions('حلقات البصل المقرمشة', 45, 'side')">إضافة صوصات</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- DRINKS SECTION -->
+        <div class="category-section" id="drinks">
+            <h3 class="section-title">المشروبات والحلويات 🥤🍰</h3>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">ميلك شيك نوتيلادريم</div>
+                    <div class="product-desc">شوكولاتة نوتيلا مع قطع الأوريو والكريمة</div>
+                    <div class="product-bottom">
+                        <div class="product-price">55 ج.م</div>
+                        <button class="opt-btn" onclick="addDirectItem('ميلك شيك نوتيلادريم', 55)">إضافة إجبارية +</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Floating Cart Bar -->
     <div class="cart-bar">
         <div>
-            <span style="font-size:0.85rem; color:#666;">الإجمالي:</span>
-            <div id="total-price" style="font-size:1.1rem; font-weight:bold; color:var(--primary-color);">0 ج.م</div>
+            <span style="font-size:0.8rem; color:#666;">إجمالي الحساب:</span>
+            <div id="cart-total" style="font-size:1.1rem; font-weight:bold; color:var(--primary-color);">0 ج.م</div>
         </div>
-        <button class="checkout-btn" onclick="openCheckout()">
+        <button class="checkout-btn" onclick="openCheckoutModal()">
             إتمام الطلب عبر واتساب 💬
         </button>
     </div>
 
-    <!-- Modal Form for Customer Info -->
+    <!-- Modal Options / Extras -->
+    <div class="modal" id="options-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="opt-product-title">اسم الوجبة</h3>
+                <span style="cursor:pointer; font-weight:bold; font-size:1.2rem;" onclick="closeModal('options-modal')">✕</span>
+            </div>
+            <div id="options-container">
+                <!-- Dynamic Content Generated by JS -->
+            </div>
+            <button class="confirm-btn" onclick="confirmProductWithOptions()">إضافة إلى السلة 🛒</button>
+        </div>
+    </div>
+
+    <!-- Modal Customer Info -->
     <div class="modal" id="checkout-modal">
         <div class="modal-content">
-            <h3>تفاصيل التوصيل</h3>
-            <input type="text" id="cust-name" placeholder="الاسم بالكامل">
-            <input type="text" id="cust-address" placeholder="العنوان بالتفصيل">
-            <div class="modal-actions">
-                <button class="send-btn" onclick="sendOrder()">إرسال إلى الواتساب</button>
-                <button class="close-btn" onclick="closeCheckout()">إلغاء</button>
+            <div class="modal-header">
+                <h3>بيانات التوصيل والطلب</h3>
+                <span style="cursor:pointer; font-weight:bold; font-size:1.2rem;" onclick="closeModal('checkout-modal')">✕</span>
             </div>
+            <div class="modal-inputs">
+                <input type="text" id="cust-name" placeholder="الاسم الكامل">
+                <input type="tel" id="cust-phone" placeholder="رقم الهاتف والتواصل">
+                <textarea id="cust-address" rows="2" placeholder="عنوان التوصيل بالتفصيل (المنطقة، الشارع، العمارة)"></textarea>
+                <textarea id="cust-notes" rows="2" placeholder="أي ملاحظات خاصة للطلب (مثال: الشطة بره، الجرس عطلان)"></textarea>
+            </div>
+            <button class="confirm-btn" style="background:#25D366;" onclick="sendOrderToWhatsApp()">تأكيد وإرسال للواتساب 📲</button>
         </div>
     </div>
 
     <script>
-        // تغيير هذا الرقم إلى رقم واتساب صاحب المطعم (مع كود الدولة)
-        const RESTAURANT_PHONE = "201000000000"; 
+        const RESTAURANT_WHATSAPP = "201000000000"; // اكتب رقم صاحب المطعم بكود الدولة هنا
 
         let cart = [];
-        let total = 0;
+        let currentItem = {};
 
-        function addToCart(title, price) {
-            cart.push({ title, price });
-            total += price;
-            updateCartUI();
+        // Filter Categories
+        function filterCategory(cat, btn) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const sections = document.querySelectorAll('.category-section');
+            sections.forEach(sec => {
+                if (cat === 'all' || sec.id === cat) {
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
         }
 
-        function updateCartUI() {
-            document.getElementById('total-price').innerText = total + " ج.م";
+        // Open Options Modal
+        function openOptions(title, basePrice, type) {
+            currentItem = { title, basePrice, type, extras: [], sizePrice: 0, finalPrice: basePrice };
+            document.getElementById('opt-product-title').innerText = title;
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            // Burger Customizations
+            if (type === 'burger') {
+                container.innerHTML = `
+                    <div class="option-group">
+                        <h4>1. نوع الخبز:</h4>
+                        <div class="option-item"><label><input type="radio" name="bread" value="خبز بريوش فاخر" checked> خبز بريوش فاخر</label></div>
+                        <div class="option-item"><label><input type="radio" name="bread" value="خبز الشوفان"> خبز الشوفان الصحي</label></div>
+                    </div>
+                    <div class="option-group">
+                        <h4>2. الإضافات (اختياري):</h4>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="شيدر صوص زياده" data-price="15"> شيدر صوص زياده (+15 ج.م)</label></div>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="شرائح بيكون بقر" data-price="25"> شرائح بيكون بقر (+25 ج.م)</label></div>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="هلابينو حار" data-price="10"> هلابينو حار (+10 ج.م)</label></div>
+                    </div>
+                `;
+            } 
+            // Pizza Customizations
+            else if (type === 'pizza') {
+                container.innerHTML = `
+                    <div class="option-group">
+                        <h4>1. حجم البيتزا:</h4>
+                        <div class="option-item"><label><input type="radio" name="p-size" value="وسط" data-price="0" checked> وسط (الحجم القياسي)</label></div>
+                        <div class="option-item"><label><input type="radio" name="p-size" value="كبير XL" data-price="45"> كبير XL (+45 ج.م)</label></div>
+                    </div>
+                    <div class="option-group">
+                        <h4>2. إضافات الأطراف والجبن:</h4>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="أطراف محشوة جبنة" data-price="30"> أطراف محشوة جبنة (+30 ج.م)</label></div>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="موتزاريلا زيادة" data-price="25"> موتزاريلا زيادة (+25 ج.م)</label></div>
+                    </div>
+                `;
+            }
+            // Side Customizations
+            else if (type === 'side') {
+                container.innerHTML = `
+                    <div class="option-group">
+                        <h4>اختر الصوص المفضل:</h4>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="صوص رانش" data-price="10"> صوس رانش (+10 ج.م)</label></div>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="صوص باربيكيو" data-price="10"> صوص باربيكيو (+10 ج.م)</label></div>
+                        <div class="option-item"><label><input type="checkbox" class="extra-cb" data-name="صوص سويت تشيلي" data-price="10"> صوص سويت تشيلي (+10 ج.م)</label></div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('options-modal').style.display = 'flex';
         }
 
-        function openCheckout() {
+        // Direct Item Add Without Options
+        function addDirectItem(title, price) {
+            cart.push({ title, price, details: "بدون إضافات" });
+            updateCart();
+        }
+
+        // Confirm Item Customization
+        function confirmProductWithOptions() {
+            let details = [];
+            let addedPrice = 0;
+
+            // Check Radio Buttons (Bread/Pizza Size)
+            const radios = document.querySelectorAll('#options-container input[type="radio"]:checked');
+            radios.forEach(r => {
+                details.push(r.value);
+                if (r.dataset.price) addedPrice += parseFloat(r.dataset.price);
+            });
+
+            // Check Checkboxes (Extras)
+            const checkboxes = document.querySelectorAll('#options-container input[type="checkbox"]:checked');
+            checkboxes.forEach(cb => {
+                details.push(cb.dataset.name);
+                addedPrice += parseFloat(cb.dataset.price);
+            });
+
+            const finalPrice = currentItem.basePrice + addedPrice;
+
+            cart.push({
+                title: currentItem.title,
+                price: finalPrice,
+                details: details.length > 0 ? details.join(', ') : 'قياسي'
+            });
+
+            updateCart();
+            closeModal('options-modal');
+        }
+
+        // Update Total & Floating Bar
+        function updateCart() {
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total').innerText = total + " ج.م";
+        }
+
+        // Modals Controls
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function openCheckoutModal() {
             if (cart.length === 0) {
-                alert("برجاء إضافة منتجات للسلة أولاً!");
+                alert('سلة الطلبات فارغة!');
                 return;
             }
             document.getElementById('checkout-modal').style.display = 'flex';
         }
 
-        function closeCheckout() {
-            document.getElementById('checkout-modal').style.display = 'none';
-        }
-
-        function sendOrder() {
+        // Send to WhatsApp Function
+        function sendOrderToWhatsApp() {
             const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
             const address = document.getElementById('cust-address').value;
+            const notes = document.getElementById('cust-notes').value;
 
-            if (!name || !address) {
-                alert("يرجى ملء كافة البيانات");
+            if (!name || !address || !phone) {
+                alert('يرجى كتابة الاسم ورقم الهاتف والعنوان بشكل كامل');
                 return;
             }
 
-            // تجميع محتوى الطلب
-            let orderText = `طلب جديد من المنيو الإلكتروني 🍔\n\n`;
-            orderText += `👤 *الاسم:* ${name}\n`;
-            orderText += `📍 *العنوان:* ${address}\n\n`;
-            orderText += `🛒 *الطلبات:*\n`;
+            let total = 0;
+            let orderMsg = `طلب جديد من المنيو الإلكتروني 📋\n`;
+            orderMsg += `----------------------------\n`;
+            orderMsg += `👤 *العميل:* ${name}\n`;
+            orderMsg += `📞 *الهاتف:* ${phone}\n`;
+            orderMsg += `📍 *العنوان:* ${address}\n`;
+            if (notes) orderMsg += `📝 *ملاحظات:* ${notes}\n`;
+            orderMsg += `----------------------------\n`;
+            orderMsg += `🛒 *عناصر الطلب:*\n\n`;
 
             cart.forEach((item, index) => {
-                orderText += `${index + 1}. ${item.title} - ${item.price} ج.م\n`;
+                orderMsg += `${index + 1}. *${item.title}*\n`;
+                orderMsg += `   التفاصيل: (${item.details})\n`;
+                orderMsg += `   السعر: ${item.price} ج.م\n\n`;
+                total += item.price;
             });
 
-            orderText += `\n💰 *الإجمالي:* ${total} ج.م`;
+            orderMsg += `----------------------------\n`;
+            orderMsg += `💰 *الإجمالي النهائي:* ${total} ج.م`;
 
-            // توجيه للواتساب
-            const whatsappUrl = `https://wa.me/${RESTAURANT_PHONE}?text=${encodeURIComponent(orderText)}`;
-            window.open(whatsappUrl, '_blank');
+            const url = `https://wa.me/${RESTAURANT_WHATSAPP}?text=${encodeURIComponent(orderMsg)}`;
+            window.open(url, '_blank');
 
-            // إعادة ضبط السلة
+            // Reset
             cart = [];
-            total = 0;
-            updateCartUI();
-            closeCheckout();
+            updateCart();
+            closeModal('checkout-modal');
         }
     </script>
 </body>
