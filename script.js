@@ -1,4 +1,5 @@
 const WHATSAPP_NUM = "201500816542";
+const DELIVERY_FEE = 30; // قيمة خدمة التوصيل
 
 // Categories Data
 const categories = [
@@ -11,7 +12,7 @@ const categories = [
     { id: 'desserts', title: 'الحلويات', icon: 'la-ice-cream' }
 ];
 
-// 50 ITEMS DATA (Updated & Verified Images)
+// 50 ITEMS DATA
 const productsData = [
     // BURGERS (1-8)
     { id: 1, cat: 'burgers', title: 'واغيو بلاتينيوم برجر', desc: 'شريحة لحم واغيو A5، جبنة جرويير معتقة، صوص الترفل الأسود', price: 290, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80' },
@@ -49,7 +50,8 @@ const productsData = [
     { id: 27, cat: 'sides', title: 'حلقات البصل المقرمشة', desc: 'تقدم مع صوص الباربيكيو والديناميت', price: 65, img: 'https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=400&q=80' },
     { id: 28, cat: 'sides', title: 'ديناميت جمبري بوفالو', desc: 'قطع الجمبري المقرمشة بصوص الديناميت الحار', price: 185, img: 'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=400&q=80' },
     { id: 29, cat: 'sides', title: 'سلطة سيزر بالدجاج', desc: 'خس كابوتشا، دجاج مشوي، خبز محمص، صوص سيزر', price: 125, img: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=400&q=80' },
-{ id: 30, cat: 'sides', title: 'سلطة كابريزي إيطالية', desc: 'شرائح الموتزاريلا الطازجة مع الطماطم والريحان', price: 110, img: 'https://images.unsplash.com/photo-1592417817098-8f3d6eb12765?auto=format&fit=crop&w=400&q=80' },    { id: 31, cat: 'sides', title: 'أصابع الموتزاريلا المقلية (6 قطع)', desc: 'تقدم مع صوص المارينارا الدافيء', price: 85, img: 'https://images.unsplash.com/photo-1531749668029-2db88e4276c7?auto=format&fit=crop&w=400&q=80' },
+    { id: 30, cat: 'sides', title: 'سلطة كابريزي إيطالية', desc: 'شرائح الموتزاريلا الطازجة مع الطماطم والريحان', price: 110, img: 'https://images.unsplash.com/photo-1592417817098-8f3d6eb12765?auto=format&fit=crop&w=400&q=80' },
+    { id: 31, cat: 'sides', title: 'أصابع الموتزاريلا المقلية (6 قطع)', desc: 'تقدم مع صوص المارينارا الدافيء', price: 85, img: 'https://images.unsplash.com/photo-1531749668029-2db88e4276c7?auto=format&fit=crop&w=400&q=80' },
     { id: 32, cat: 'sides', title: 'سلطة كينوا بالأفوكادو', desc: 'كينوا عضوي، أفوكادو، رمان، وخضار مع دريسنج الليمون', price: 135, img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80' },
     { id: 33, cat: 'sides', title: 'بطاطس ودجز بالثوم والأعشاب', desc: 'بطاطس ودجز متبلة بالأعشاب والروز ماري', price: 70, img: 'https://images.unsplash.com/photo-1600555379765-f82335a7b1b0?auto=format&fit=crop&w=400&q=80' },
     { id: 34, cat: 'sides', title: 'شوربة مشروم بالكريمة', desc: 'شربة مشروم طازج مع كريمة الطهي الإيطالية', price: 80, img: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=400&q=80' },
@@ -244,7 +246,7 @@ function renderCartUI() {
     const listContainer = document.getElementById('drawer-cart-items');
     listContainer.innerHTML = '';
 
-    let totalAcc = 0;
+    let itemsTotal = 0;
     let totalItemsCount = 0;
 
     if (cart.length === 0) {
@@ -253,7 +255,7 @@ function renderCartUI() {
 
     cart.forEach((item, idx) => {
         const itemTotal = item.unitPrice * item.qty;
-        totalAcc += itemTotal;
+        itemsTotal += itemTotal;
         totalItemsCount += item.qty;
 
         listContainer.innerHTML += `
@@ -272,9 +274,26 @@ function renderCartUI() {
         `;
     });
 
+    const grandTotal = cart.length > 0 ? (itemsTotal + DELIVERY_FEE) : 0;
+
+    if (cart.length > 0) {
+        listContainer.innerHTML += `
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; color: var(--text-secondary); margin-bottom: 5px;">
+                    <span>المجموع الفرعي:</span>
+                    <span>${itemsTotal} ج.م</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
+                    <span>رسوم التوصيل:</span>
+                    <span>${DELIVERY_FEE} ج.م</span>
+                </div>
+            </div>
+        `;
+    }
+
     document.getElementById('cart-badge-count').innerText = totalItemsCount;
     document.getElementById('drawer-item-count').innerText = totalItemsCount;
-    document.getElementById('cart-bottom-total').innerText = totalAcc + " ج.م";
+    document.getElementById('cart-bottom-total').innerText = grandTotal + " ج.م";
 }
 
 function processWhatsAppOrder() {
@@ -299,16 +318,20 @@ function processWhatsAppOrder() {
     text += `📍 *العنوان:* ${address}\n`;
     text += `--------------------------------\n\n`;
 
-    let grandTotal = 0;
+    let itemsTotal = 0;
     cart.forEach((it, i) => {
         const itemSum = it.unitPrice * it.qty;
-        grandTotal += itemSum;
+        itemsTotal += itemSum;
         text += `${i+1}. *${it.title}* (${it.qty}x)\n`;
         text += `   التفاصيل: ${it.extrasStr}\n`;
         text += `   المجموع: ${itemSum} ج.م\n\n`;
     });
 
+    const grandTotal = itemsTotal + DELIVERY_FEE;
+
     text += `--------------------------------\n`;
+    text += `🍔 *مجموع الوجبات:* ${itemsTotal} ج.م\n`;
+    text += `🛵 *رسوم التوصيل:* ${DELIVERY_FEE} ج.م\n`;
     text += `💰 *الإجمالي الكلي:* ${grandTotal} ج.م`;
 
     window.open(`https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(text)}`, '_blank');
